@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"[]>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>MarkTask</title>
+    <link rel="stylesheet" href="css/master.css" type="text/css" />
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print" />
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/scripts.js" type="text/javascript"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+  initializeToc();
+});
+</script>
+    <!-- We are using Font Awesome - http://fortawesome.github.com/Font-Awesome - licensed under CC BY 3.0 -->
+  </head>
+  <body>
+    <div id="container">
+      <div id="top" />
+      <div id="toc">
+        <p class="tocCollapser" title="Collapse Table of Content">«</p>
+        <ul class="features">
+          <li class="file" id="root">
+            <a href="index.html">Home</a>
+          </li>
+          <li class="file">
+            <a href="AddTask.html">AddTask</a>
+          </li>
+          <li class="file">
+            <a href="DataShouldBePersisted.html">Data should be persisted</a>
+          </li>
+          <li class="file">
+            <a href="DeleteTask.html">DeleteTask</a>
+          </li>
+          <li class="file">
+            <span class="current">MarkTask</span>
+          </li>
+        </ul>
+      </div>
+      <div id="feature">
+        <h1>MarkTask</h1>
+        <div class="description">
+          <p>In order to show my avancement
+As a user
+I want to mark the task as done</p>
+        </div>
+        <ul id="scenarios">
+          <li class="scenario">
+            <div class="scenario-heading">
+              <h2>Mark a todo as done and ensure it is persisted</h2>
+            </div>
+            <div class="steps">
+              <ul>
+                <li class="step">
+                  <span class="keyword">Given </span>I have a todo database filled with<div class="table_container"><table class="datatable"><thead><tr><th>Done</th><th>Text</th><th>Due Date</th></tr></thead><tbody><tr><td>NO</td><td>Sample todo 1</td><td>02/01/2014</td></tr><tr><td>NO</td><td>Sample todo 2</td><td>02/01/2014</td></tr><tr><td>NO</td><td>Sample todo 3</td><td>02/01/2014</td></tr></tbody></table></div></li>
+                <li class="step">
+                  <span class="keyword">When </span>I check the todo with text "Sample todo 2"</li>
+                <li class="step">
+                  <span class="keyword">Then </span>I should have todos on the screen with<div class="table_container"><table class="datatable"><thead><tr><th>Done</th><th>Text</th><th>Due Date</th></tr></thead><tbody><tr><td>NO</td><td>Sample todo 1</td><td>02/01/2014</td></tr><tr><td>YES</td><td>Sample todo 2</td><td>02/01/2014</td></tr><tr><td>NO</td><td>Sample todo 3</td><td>02/01/2014</td></tr></tbody></table></div></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="footer">
+        <p>Generated on: 8 décembre 2014 11:51:32</p>
+        <p>Produced by Pickles, version 0.19.0.0</p>
+      </div>
+    </div>
+  </body>
+</html>
