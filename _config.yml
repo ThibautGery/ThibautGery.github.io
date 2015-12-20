@@ -1,0 +1,22 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+
+gems :
+  - jekyll-paginate
+  - pygments
+
+# Setup
+title:            Thibaut Géry
+tagline:          'Personnal thoughs'
+description:      'My personnal site'
+url:              http://hyde.getpoole.com
+
+author:
+  name:           'Thibaut Géry'
+  url:            thibautgery.com
+
+paginate:         5
