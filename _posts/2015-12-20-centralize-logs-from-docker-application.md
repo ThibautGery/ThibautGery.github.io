@@ -3,6 +3,9 @@ layout: post
 title: Centralize logs from Docker applications
 ---
 
+*I would like to thanks my coworkers at [Octo](www.octo.com) for their precious
+feedbacks*
+
 This article aims at showing how we can centralize logs from a Docker
 application in a database where we can then query them.
 
