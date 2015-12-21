@@ -1,9 +1,10 @@
 ---
 layout: post
 title: Centralize logs from Docker applications
+comments: true
 ---
 
-*I would like to thanks my coworkers at [Octo](www.octo.com) for their precious
+*I would like to thanks my coworkers at [Octo](https://www.octo.com/en) for their precious
 feedbacks*
 
 This article aims at showing how we can centralize logs from a Docker
