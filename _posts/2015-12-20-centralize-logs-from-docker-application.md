@@ -32,17 +32,17 @@ Architecture
 
 We need a tool to extract the logs from the Docker container and push them in [Elasticsearch](https://www.elastic.co/products/elasticsearch). In order to do that, we
 can choose between several tools like [Logstash](https://www.elastic.co/products/logstash)
-or [Fluentd](http://www.fluentd.org/).
+or [Fluentd](https://www.fluentd.org/).
 
 [Logstash](https://www.elastic.co/products/logstash) is built by
 [Elastic](https://www.elastic.co/) and is well integrated
 with Elasticsearch and Kibana. It has lots of plugins.
-[Fluentd](http://www.fluentd.org/) describes itself as an open source data
+[Fluentd](https://www.fluentd.org/) describes itself as an open source data
 collector for unified logging layer. Docker provides a [driver](https://docs.docker.com/engine/reference/logging/fluentd/) to push logs
 directly into Fluentd. Fluentd also has a lot of plugins like [one](https://github.com/uken/fluent-plugin-elasticsearch) to connect to
 Elasticsearch.
 
-I've chosen Fluentd because Docker pushes it, and [Kubernetes](http://kubernetes.io/)
+I've chosen Fluentd because Docker pushes it, and [Kubernetes](https://kubernetes.io/)
 (an important Docker project) uses it. Furthermore, in our example, Fluentd
 Elasticsearch's plugin plays well with Kibana.
 
@@ -66,11 +66,11 @@ The process can be described in 6 steps
  5. Structured data are sent to Elasticsearch in batches, we might have to
  wait a minute or two for the data to arrive in Elasticsearch. We can
  parameterize this behavior with the
- [Buffer plugins](http://docs.fluentd.org/articles/buffer-plugin-overview)
+ [Buffer plugins](https://docs.fluentd.org/articles/buffer-plugin-overview)
  6. Data is exposed to administrators through graphs and diagrams with
  Kibana
 
-![Fluentd Docker process schema](http://i.imgur.com/SW57gC7.png)
+![Fluentd Docker process schema](https://i.imgur.com/SW57gC7.png)
 
 
 ### Application
@@ -115,19 +115,19 @@ which is used to route the data between the different steps.
 
 In the previous example, the tag is specified after the key `match` : `app.access`.
 The tag of the incoming data is the URL of the request.
-For example running `curl http://localhost:8888/myapp.access?json={"event":"data"}`
+For example running `curl https://localhost:8888/myapp.access?json={"event":"data"}`
 outputs `{"event":"data"}` to stdout.
 
-This [slideshare](http://www.slideshare.net/treasure-data/the-basics-of-fluentd)
+This [slideshare](https://www.slideshare.net/treasure-data/the-basics-of-fluentd)
 explains the basics of Fluentd.
 
 
 Each step is a plugin. There are more than 150 plugins divided into 6 categories.
 The most important ones are:
 
- * [Input plugins](http://docs.fluentd.org/articles/input-plugin-overview)
+ * [Input plugins](https://docs.fluentd.org/articles/input-plugin-overview)
  to accept and parse data
- * [Output plugins](http://docs.fluentd.org/articles/output-plugin-overview)
+ * [Output plugins](https://docs.fluentd.org/articles/output-plugin-overview)
  to send the data to external systems, in our example Elasticsearch
 
 Configuration
@@ -154,8 +154,8 @@ $ cat ./conf/Fluentd
 </match>
 ```
 Fluentd accepts connections on the 24224 port and prints logs on stdout
-thanks to two default plugins [in_forward](http://docs.fluentd.org/articles/in_forward)
-and [out_stdout](http://docs.fluentd.org/articles/out_stdout)
+thanks to two default plugins [in_forward](https://docs.fluentd.org/articles/in_forward)
+and [out_stdout](https://docs.fluentd.org/articles/out_stdout)
 
 We can run Fluentd with `Docker-compose -f Docker-compose-fluentd.yml up`
 
@@ -210,7 +210,7 @@ $ cat ./conf/Fluentd
 
 <match nginx.Docker.**>
   type elasticsearch
-  hosts http://elasticsearch.host.com:9200
+  hosts https://elasticsearch.host.com:9200
   logstash_format true
 </match>
 ```
@@ -233,7 +233,7 @@ Then we can run the application and query it with our favorite browser to fetch
 some lines form Elasticsearch in the Logstash index. Since Fluentd buffers the data
 before sending them in batches, we might have to wait a minute or two.
 
-![Kibana result unstructured](http://i.imgur.com/cXrFzEO.png)
+![Kibana result unstructured](https://i.imgur.com/cXrFzEO.png)
 
 
 Unfortunately, only the Docker metadata are sent (like the Docker name, label, id...)
@@ -267,7 +267,7 @@ $ cat ./conf/Fluentd
 
 <match docker.**>
   type elasticsearch
-  hosts http://elasticsearch.host.com:9200
+  hosts https://elasticsearch.host.com:9200
   logstash_format true
 </match>
 ```
@@ -284,7 +284,7 @@ The second block of configuration :
 
 Here we use the tag concept to route the data through the correct steps:
 
-![Flow diagram of fluentd](http://i.imgur.com/9YeOcod.png)
+![Flow diagram of fluentd](https://i.imgur.com/9YeOcod.png)
 
   1. the data arrives with the tag set by docker driver :
 `nginx.docker._container-name_`
@@ -294,7 +294,7 @@ Here we use the tag concept to route the data through the correct steps:
   5. data is sent to Elasticsearch
 
 Here is the structured data we can now used to create diagrams :
-![Kibana result structured](http://i.imgur.com/SYVSPLH.png)
+![Kibana result structured](https://i.imgur.com/SYVSPLH.png)
 
 We can then run the application and query it with our favorite browser to see
 the data correctly formatted in Kibana.
@@ -318,7 +318,7 @@ up in Kibana.
 
 We are now able to create graphs such as this one:
 
-![status code pie](http://i.imgur.com/LZA4Y4V.png)
+![status code pie](https://i.imgur.com/LZA4Y4V.png)
 
 Conclusion
 ----------
