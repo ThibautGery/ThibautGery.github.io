@@ -13,6 +13,7 @@ gems :
 title:            Thibaut Géry
 tagline:          'Personnal thoughs'
 description:      'My personnal site'
+host:             thibautgery.github.io
 url:              https://thibautgery.github.io
 
 author:
