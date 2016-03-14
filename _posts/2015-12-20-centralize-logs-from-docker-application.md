@@ -2,6 +2,7 @@
 layout: post
 title: Centralize logs from Docker applications
 comments: true
+excerpt_separator: <!--more-->
 ---
 
 *I would like to thanks my coworkers at [Octo](https://www.octo.com/en) for their precious
@@ -24,6 +25,8 @@ should be loosely coupled with the logging system. Depending on the environment
 (development, pre-production, production) we might not send logs to the same
 system: a file for development, Elasticsearch for pre-production, Elasticsearch
 and HDFS for production.
+
+<!--more-->
 
 Architecture
 ------------
