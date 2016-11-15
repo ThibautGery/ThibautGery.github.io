@@ -1,13 +1,12 @@
 # Dependencies
 markdown:         kramdown
-highlighter:      pygments
+highlighter:      rouge
 
 # Permalinks
 permalink:        pretty
 
 gems :
   - jekyll-paginate
-  - pygments
 
 # Setup
 title:            Thibaut Géry
