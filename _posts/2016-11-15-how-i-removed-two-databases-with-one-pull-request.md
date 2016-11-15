@@ -7,13 +7,13 @@ excerpt_separator: <!--more-->
 *I would like to thanks my coworkers at [Octo](https://www.octo.com/en) for their precious
 feedbacks*
 
-
 My first project right after school was called KISS which means
 
 *[Keep it simple, stupid](https://en.wikipedia.org/wiki/KISS_principle)*
 
 
 Three years and a few IT projects later, I thought that I got it right and applied the following rules:
+
 * keep your applications small and simple,
 * remove most of its complexity,
 * don't over-engineer,
@@ -26,10 +26,12 @@ Yet a few weeks ago, I learned that you can always remove useless things. You ju
 
 ### Story time
 
-I wanted to create an API above the drugs data set ([freely provided by the French government as CSV files](https://www.data.gouv.fr/fr/datasets/base-de-donnees-publique-des-medicaments-base-officielle/)). I knew that I needed a script to parse and store the data and a web API to expose them. The code is on [github}(https://github.com/sgmap/api-medicaments) and the application is [live](http://medicaments.api.gouv.fr).
+I wanted to create an API above the drugs data set ([freely provided by the French government as CSV files](https://www.data.gouv.fr/fr/datasets/base-de-donnees-publique-des-medicaments-base-officielle/)). I knew that I needed a script to parse and store the data and a web API to expose them. The code is on [github](https://github.com/sgmap/api-medicaments) and the application is [live](http://medicaments.api.gouv.fr).
 When I start a web application, I have 2 main choices to make:
+
 * **Choose a platform**: I picked nodejs, for the only reason that I am proficient in it
 * **Choose a database**: I took part to a similar project where I used readDB, commonly called mongoDB. It was painfully slow when upserting lots of data, so I chose couchbase instead, a key/value store with a document query language.
+
 After a while I needed "full text" search, so I added elasticsearch, simply because I knew how to use it. It requires a few (ugly) [scripts](https://github.com/sgmap/api-medicaments/blob/de576c3cebd78b3bc80ba3b272669b06718c6e51/bin/prepareDataBase.sh) to automate its synchronization with couchbase.
 
 
@@ -39,6 +41,7 @@ But it got me thinking, couldn’t I remove the second database too? And I learn
 
 
 The application is now more simple and reliable:
+
 * The code base has been reduced: 122 untested lines of script, 227 lines of configuration
 * The application is now deployed with one image: less reasons to fail
 * No more scripts to load the data in the database (the file is read by the application)
