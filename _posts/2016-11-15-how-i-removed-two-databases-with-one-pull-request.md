@@ -47,7 +47,7 @@ The application is now more simple and reliable:
 * No more scripts to load the data in the database (the file is read by the application)
 
 
-Nonetheless, after the refactor, the application was a bit slower even if everything was done in memory. Having said that, response time is still below 20 seconds, so the advantages brought by this removal still exceed the loss of a few milliseconds.
+Nonetheless, after the refactor, the application was a bit slower even if everything was done in memory. Having said that, response time is still below 20 milliseconds, so the advantages brought by this removal still exceed the loss of a few milliseconds.
 
 
 This resulted in a [pull request](https://github.com/sgmap/api-medicaments/pull/12) with twice as many deleted lines as added lines and my takeaway would be:
