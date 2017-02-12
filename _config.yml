@@ -12,7 +12,6 @@ gems :
 title:            Thibaut Géry
 tagline:          "Sharing things I've learned the hard way"
 description:      "Sharing things I've learned the hard way"
-host:             thibautgery.github.io
 url:              http://thibautgery.com
 
 author:
