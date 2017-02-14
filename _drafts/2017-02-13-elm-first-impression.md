@@ -1,6 +1,6 @@
 ---
 layout: post
-title: My first impression with ELM
+title: My first impressions with ELM
 comments: true
 excerpt_separator: <!--more-->
 ---
@@ -15,7 +15,7 @@ I wanted to give the [Elm] language a try because:
 **TL:DR:** My expectations are partly achieved: they are not a lot of libraries but you still need too much tools around your project. The language being close to [Haskell] is definitely functional, there is no state (at least they are "hidden") and the language rely on Message to exchange informations. It feels sometimes a bit of a burden but only because I am a beginner.
 
 
-*Note: I discovered the [Awesome List of Elm](https://github.com/isRuslan/awesome-elm) with all the needed pointer*
+*Note: I discovered the [Awesome List of Elm](https://github.com/isRuslan/awesome-elm) with all the needed pointers.*
 
 <!--more-->
 
@@ -25,25 +25,46 @@ First of all I chose the following tutorial [www.elm-tutorial.org](https://www.e
 
 > ###### First of all the compilation and the unit test are lightning fast.
 
-This may be biased since I am currently coding in Scala and its compiler is extremely slow, but it is real pleasure to code. You don't have the time to slack off on reddit or hacker news.
+This may be biased since I am currently coding in Scala and its compiler is extremely slow, but it is real pleasure to code.
+
+You don't have the time to slack off on reddit or hacker news. It seems even faster than babel.
 
 > ###### The compiler is really strict
 
 It's the first time I like a compiler, I usually don't compliment compiler, yet:
 
  * it is strictly typed and the compiler does some type inference (nothing new in functional programing but yet)
- * so far the compiler has been able to warn me everyone of my error. For example when using pattern matching, the compiler assure that you don't have forgot one the type.
+ * so far the compiler has been able to warn me everyone of my error. For example when using pattern matching, the compiler assure that you don't have forgot one the type. The following code will produce an error since I have forgotten the `GeneratePlayer` in the pattern matching.
+
+```haskell
+type Msg
+    = GeneratePlayer
+      | ShowPlayers
+
+update : Msg -> String
+update message =
+    case message of
+      ShowPlayers ->
+          "the players are: "
+```
+
 On the landing page, the documentation state "No Runtime Exceptions" and it looks like like they are not lying.
-I feel like I don't really need to test that my component are integrating well with each others. I do need to test my business logic.
+I feel like I don't really need to test that my component are integrating well with each others. Nonetheless, I do need to test my business logic.
 
 > ###### The community is small but very active
 
-The community is quite small but really active. Yet it means one things: you just can't copy/paste your exception and expect to find the answer on [stackoverflow]. For example, to have a better understanding of the testing framework, I took a look at the core library tests.
-One thing that surprised me is the number of IDE available integrations.
+The community is quite small but really active. Yet it means one things: you just can't copy/paste your exception and expect to find the answer on [stackoverflow]. For example, to have a better understanding of the testing framework, I look at the core library tests.
+However the number of IDE integration is pretty high.
 
 > ###### Steep learning curve
 
-The learning curve is pretty steep, especially  if you are not familiar with functional programming, Haskell are definitely a plus. The web application is based on a message architecture which is not trivial to implement.
+The learning curve is pretty steep, especially  if you are not familiar with functional programming, Haskell is definitely a plus. At first sight the following expression is not very clear
+
+```haskell
+List.map (\b -> b + 1) [1, 2, 3] # replace with a fold
+```
+
+The web application is based on a message architecture which is not trivial to implement.
 
 > ###### Weird indentation
 
@@ -67,18 +88,63 @@ After a few days it actually make sense:
 
 This is one of my deception: I was expecting to get rid of npm, bower, webpack, gulp & co but it ain't that simple:
 
-* most of the project use `npm` like this one [`elm-css`] because the test's runner is a node binary.
-* if you want to integrate external CSS stylesheet like [Semantic UI](http://semantic-ui.com/) or even your own you can use [Webpack] and use the Elm loader. I am not sure this is enough to add a new tool (you could use a direct link to a CDN)
+* most of the project use `npm` like [`elm-css`] because the test's runner is a node binary.
+* if you want to integrate external CSS stylesheet like [Semantic UI](http://semantic-ui.com/) or even your own you can use [Webpack] and use the Elm loader. I am not sure this is enough to add a new tool (you could use a direct link to a CDN for example)
 
 
-> **TODO** Unit test
+> ###### Damn it's easy to write unit test
 
-**TODO**
+Since all the code is immutable, it's a pleasure to write unit test: no need to mock, no side effect. The tests are easily understanding like the following [snippet from my project](https://github.com/ThibautGery/elm-tuto/blob/master/tests/Players/UpdateTests.elm#L9-L31)
 
+```haskell
+layers: List Player
+players = [
+    { id="1"
+    , name= "toto"
+    , level = 1
+    }]
+
+tests : Test
+tests =
+    describe "The Player module"
+        [ describe "deletePlayer"
+            [ test "should remove no player if not in list" <|
+                \() ->
+                    let
+                        actual = deletePlayer "3" players
+                    in
+                        Expect.equalLists actual players
+```
+
+I have found too limitation:
+* the tooling is not optimized: there is two `elm-package.json` one for the tests and one the application, the tests need the dependencies of the tested function, so you have to duplicate most of your dependencies.
+* I still need to figure how to test the function using pattern command to share a state like the following snippet
+
+```haskell
+deleteRequest : Player -> Http.Request PlayerId
+deleteRequest player =
+    Http.request
+        { body = memberEncoded player |> Http.jsonBody
+        , expect = Http.expectStringResponse (\_ -> Ok player.id)
+        , headers = []
+        , method = "DELETE"
+        , timeout = Nothing
+        , url = "http://localhost:4000/players/" + player.id
+        , withCredentials = False
+        }
+
+
+delete : Player -> Cmd Msg
+delete player =
+    deleteRequest player
+        |> Http.send OnDelete
+```
 
 > ###### No Whaou effect
 
-It might be for the best since I have always been deceived after that initial effect because it would only mean that is some kind of dark magic going on under the hood. I feel like the language is not too high level.
+It might be for the best since I have always been deceived after that initial feeling because it would only mean that there is some kind of dark magic going on under the hood.
+
+So far, I like to language and the developer experience even if I know I won't be able to code with this framework for my client.
 
 
 *Disclaimer: I have only played with the language for 3 days.*
