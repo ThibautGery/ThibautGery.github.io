@@ -61,8 +61,11 @@ However the number of IDE integration is pretty high.
 The learning curve is pretty steep, especially  if you are not familiar with functional programming, Haskell is definitely a plus. At first sight the following expression is not very clear
 
 ```haskell
-List.map (\b -> b + 1) [1, 2, 3] # replace with a fold
+List.foldr (+) 0 [1, 2, 3]
 ```
+The architecture was new in many way for me:
+ * The changes are sent via message to a dispatcher
+ * The application is organized as components (like [react])
 
 The web application is based on a message architecture which is not trivial to implement.
 
@@ -83,6 +86,17 @@ After a few days it actually make sense:
 
 * if you want to add a line, don't add the comma on the previous line,
 * if you are commenting the last line don't bother with the comma.
+
+> ###### Html in Code, WTF ?!?
+
+I am still surprised by using HTML method in my code, I still don't have a strong opinion with that feature but I got used to JSX in [react]. You can find a example in the following snippet.
+
+```haskell
+btnLevelDecrease : Player -> Html Msg
+btnLevelDecrease player =
+    a [ class "btn ml1 h1", onClick (ChangeLevel player.id -1) ]
+        [ i [ class "fa fa-minus-circle" ] [] ]
+```
 
 > ###### Still too much tools needed
 
@@ -154,3 +168,4 @@ So far, I like to language and the developer experience even if I know I won't b
 [stackoverflow]:http://stackoverflow.com/questions/tagged/elm
 [`elm-css`]: https://github.com/rtfeldman/elm-css
 [Webpack]: https://webpack.github.io/
+[react]: https://facebook.github.io/react/
