@@ -1,11 +1,19 @@
 ---
 layout: post
-title: My first impressions with ELM
+title: My first impressions with Elm
 comments: true
 excerpt_separator: <!--more-->
 ---
 
-I wanted to give the [Elm] language a try because:
+
+> Elm is a domain-specific programming language for declaratively creating web browser-based graphical user interfaces. Elm is purely functional, and is developed with emphasis on usability, performance, and robustness.
+
+Source: [Wikipedia](https://en.wikipedia.org/wiki/Elm_(programming_language))
+
+
+[Elm] is a functional programming language created in 2012 by Evan Czaplicki for his thesis. The platform is now used in production by a few companies: [NoRedInk](https://www.noredink.com/) or [Pivotal Tracker](https://www.pivotaltracker.com/blog/Elm-pivotal-tracker/).
+
+The idea is to compile ~~Haskell~~ Elm to Javascript to create web site. I wanted to give it a try because:
 
 * The [Javascript fatigue](http://thefullstack.xyz/javascript-fatigue/) I just can keep up with all framework and library in JS to setup a website, I has became so complex, maybe there is a more stable and easier platform,
 * I love functional programming and Javascript is only partly functional, the language is not fully immutable (even if it's better with `const` keyword in EcmaScript6),
@@ -64,6 +72,7 @@ The learning curve is pretty steep, especially  if you are not familiar with fun
 List.foldr (+) 0 [1, 2, 3]
 ```
 The architecture was new in many way for me:
+
  * The changes are sent via message to a dispatcher
  * The application is organized as components (like [react])
 
@@ -98,6 +107,10 @@ btnLevelDecrease player =
         [ i [ class "fa fa-minus-circle" ] [] ]
 ```
 
+> ###### No interoperability with Javascript
+
+Even if we can use Javascript and Elm in the same webpage, it's not possible to use javascript library in Elm code. It would definitely break the message architecture with all those awful callback.
+
 > ###### Still too much tools needed
 
 This is one of my deception: I was expecting to get rid of npm, bower, webpack, gulp & co but it ain't that simple:
@@ -120,17 +133,17 @@ players = [
 
 tests : Test
 tests =
-    describe "The Player module"
-        [ describe "deletePlayer"
-            [ test "should remove no player if not in list" <|
-                \() ->
-                    let
-                        actual = deletePlayer "3" players
-                    in
-                        Expect.equalLists actual players
+    [ describe "deletePlayer"
+        [ test "should remove no player if not in list" <|
+            \() ->
+                let
+                    actual = deletePlayer "3" players
+                in
+                    Expect.equalLists actual players
 ```
 
-I have found too limitation:
+I have found too limitations:
+
 * the tooling is not optimized: there is two `elm-package.json` one for the tests and one the application, the tests need the dependencies of the tested function, so you have to duplicate most of your dependencies.
 * I still need to figure how to test the function using pattern command to share a state like the following snippet
 
@@ -158,7 +171,8 @@ delete player =
 
 It might be for the best since I have always been deceived after that initial feeling because it would only mean that there is some kind of dark magic going on under the hood.
 
-So far, I like to language and the developer experience even if I know I won't be able to code with this framework for my client.
+
+So far, I like to language and the developer experience but its usage is not widespread enough to be used for my clients. I will nonetheless consider it for my next personal project, I will strengthen my functional programing skills which is always a plus. 
 
 
 *Disclaimer: I have only played with the language for 3 days.*
