@@ -160,7 +160,7 @@ tests =
                     Expect.equalLists actual players
 ```
 
-I have found too limitations:
+I have found two limitations:
 
 * the tooling is not optimized: there is two `elm-package.json` one for the tests and one the application, the tests need the dependencies of the tested function, so you have to duplicate most of your dependencies.
 * I still need to figure how to test the function using pattern command to share a state like the following snippet
