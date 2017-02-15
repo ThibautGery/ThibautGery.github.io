@@ -15,7 +15,7 @@ Source: [Wikipedia](https://en.wikipedia.org/wiki/Elm_(programming_language))
 
 The idea is to compile ~~Haskell~~ Elm to Javascript to create web site. I wanted to give it a try because:
 
-* The [Javascript fatigue](http://thefullstack.xyz/javascript-fatigue/) I just can keep up with all framework and library in JS to setup a website, I has became so complex, maybe there is a more stable and easier platform,
+* The [Javascript fatigue](http://thefullstack.xyz/javascript-fatigue/) I just can't keep up with all framework and library in JS to setup a website, I has became so complex, maybe there is a more stable and easier platform,
 * I love functional programming and Javascript is only partly functional, the language is not fully immutable (even if it's better with `const` keyword in EcmaScript6),
 * I wanted to feel like a hipster again.
 
@@ -45,8 +45,8 @@ You don't have the time to slack off on reddit or hacker news. It seems even fas
 
 It's the first time I like a compiler, I usually don't compliment compiler, yet:
 
- * it is strictly typed and the compiler does some type inference (nothing new in functional programing but yet)
- * so far the compiler has been able to warn me everyone of my error. For example when using pattern matching, the compiler assure that you don't have forgot one the type. The following code will produce an error since I have forgotten the `GeneratePlayer` in the pattern matching.
+ * it is strictly typed and the compiler does some type inference (nothing new in functional programing)
+ * so far the compiler has been able to warn me for my multiple errors. For example when using pattern matching, the compiler makes sure that you haven't forgot one the type. The following code will produce an error since I have forgotten the `GeneratePlayer` in the pattern matching.
 
 ```haskell
 type Msg
@@ -90,7 +90,7 @@ The web application is based on a message architecture which is not trivial to i
 {: .bquote-neutral}
 
 
-The code formatting standard  from creating the object feels weird
+The code formatting standard for creating the object feels weird
 
 ```haskell
 new : Player
@@ -125,7 +125,7 @@ btnLevelDecrease player =
 
 Even if we can use Javascript and Elm in the same webpage, it's not possible to use javascript library in Elm code. It would definitely break the message architecture with all those awful callback.
 
-> ###### Still too much tools needed
+> ###### Still too many tools needed
 {: .bquote-error}
 
 
@@ -185,7 +185,7 @@ delete player =
         |> Http.send OnDelete
 ```
 
-> ###### No Whaou effect
+> ###### No "Oh my god, I will only use this from now on" effect
 {: .bquote-neutral}
 
 It might be for the best since I have always been deceived after that initial feeling because it would only mean that there is some kind of dark magic going on under the hood.
