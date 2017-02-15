@@ -32,12 +32,16 @@ First of all I chose the following tutorial [www.elm-tutorial.org](https://www.e
 ### Here are a list of my first impressions:
 
 > ###### First of all the compilation and the unit test are lightning fast.
+{: .bquote-success}
 
 This may be biased since I am currently coding in Scala and its compiler is extremely slow, but it is real pleasure to code.
 
 You don't have the time to slack off on reddit or hacker news. It seems even faster than babel.
 
 > ###### The compiler is really strict
+{: .bquote-success}
+
+
 
 It's the first time I like a compiler, I usually don't compliment compiler, yet:
 
@@ -60,11 +64,15 @@ On the landing page, the documentation state "No Runtime Exceptions" and it look
 I feel like I don't really need to test that my component are integrating well with each others. Nonetheless, I do need to test my business logic.
 
 > ###### The community is small but very active
+{: .bquote-neutral}
+
 
 The community is quite small but really active. Yet it means one things: you just can't copy/paste your exception and expect to find the answer on [stackoverflow]. For example, to have a better understanding of the testing framework, I look at the core library tests.
 However the number of IDE integration is pretty high.
 
 > ###### Steep learning curve
+{: .bquote-error}
+
 
 The learning curve is pretty steep, especially  if you are not familiar with functional programming, Haskell is definitely a plus. At first sight the following expression is not very clear
 
@@ -79,6 +87,8 @@ The architecture was new in many way for me:
 The web application is based on a message architecture which is not trivial to implement.
 
 > ###### Weird indentation
+{: .bquote-neutral}
+
 
 The code formatting standard  from creating the object feels weird
 
@@ -97,6 +107,8 @@ After a few days it actually make sense:
 * if you are commenting the last line don't bother with the comma.
 
 > ###### Html in Code, WTF ?!?
+{: .bquote-neutral}
+
 
 I am still surprised by using HTML method in my code, I still don't have a strong opinion with that feature but I got used to JSX in [react]. You can find a example in the following snippet.
 
@@ -108,10 +120,14 @@ btnLevelDecrease player =
 ```
 
 > ###### No interoperability with Javascript
+{: .bquote-error}
+
 
 Even if we can use Javascript and Elm in the same webpage, it's not possible to use javascript library in Elm code. It would definitely break the message architecture with all those awful callback.
 
 > ###### Still too much tools needed
+{: .bquote-error}
+
 
 This is one of my deception: I was expecting to get rid of npm, bower, webpack, gulp & co but it ain't that simple:
 
@@ -120,6 +136,8 @@ This is one of my deception: I was expecting to get rid of npm, bower, webpack, 
 
 
 > ###### Damn it's easy to write unit test
+{: .bquote-success}
+
 
 Since all the code is immutable, it's a pleasure to write unit test: no need to mock, no side effect. The tests are easily understanding like the following [snippet from my project](https://github.com/ThibautGery/elm-tuto/blob/master/tests/Players/UpdateTests.elm#L9-L31)
 
@@ -168,11 +186,12 @@ delete player =
 ```
 
 > ###### No Whaou effect
+{: .bquote-neutral}
 
 It might be for the best since I have always been deceived after that initial feeling because it would only mean that there is some kind of dark magic going on under the hood.
 
 
-So far, I like to language and the developer experience but its usage is not widespread enough to be used for my clients. I will nonetheless consider it for my next personal project, I will strengthen my functional programing skills which is always a plus. 
+So far, I like to language and the developer experience but its usage is not widespread enough to be used for my clients. I will nonetheless consider it for my next personal project, It will strengthen my functional programing skills which is always a plus.
 
 
 *Disclaimer: I have only played with the language for 3 days.*
