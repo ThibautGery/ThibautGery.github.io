@@ -1,0 +1,11 @@
+.bquote-error {
+  border-color: #ac4142;
+}
+
+.bquote-neutral {
+  border-color: #eae546;
+}
+
+.bquote-success {
+  border-color: #41ac53;
+}
