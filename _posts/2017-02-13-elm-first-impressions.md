@@ -20,7 +20,7 @@ The idea is to compile ~~Haskell~~ Elm to Javascript to create web site. I wante
 * I wanted to feel like a hipster again.
 
 
-**TL:DR:** My expectations are partly achieved: they are not a lot of libraries but you still need too much tools around your project. The language being close to [Haskell] is definitely functional, there is no state (at least they are "hidden") and the language rely on Message to exchange informations. It feels sometimes a bit of a burden but only because I am a beginner.
+**TL:DR:** My expectations are partly achieved: there are not 42 libraries to do the same thing but you still need too much tools around your project. The language being close to [Haskell] is definitely functional, there is no state (at least they are "hidden") and the language rely on Message to exchange informations. It feels sometimes a bit of a burden but only because I am a beginner.
 
 
 *Note: I discovered the [Awesome List of Elm](https://github.com/isRuslan/awesome-elm) with all the needed pointers.*
