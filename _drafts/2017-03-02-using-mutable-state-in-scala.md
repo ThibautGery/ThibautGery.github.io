@@ -1,25 +1,19 @@
 ---
 layout: post
-title: Using mutable state in Scala
+title: Writing pure functions in Scala with mutable structures
 comments: true
 excerpt_separator: <!--more-->
 ---
-Functional programing is a programing paradigm which an be difficult to defined, is it because the language uses [First class function](https://en.wikipedia.org/wiki/First-class_function) like the name suggests ?
-Wikipedia present it like this:
 
-> In computer science, functional programming is a programming paradigm—a style of building the structure and elements of computer programs—that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data. It is a declarative programming paradigm, which means programming is done with expressions or declarations instead of statements. In functional code, the output value of a function depends only on the arguments that are input to the function, so calling a function f twice with the same value for an argument x will produce the same result f(x) each time. Eliminating side effects, i.e. changes in state that do not depend on the function inputs, can make it much easier to understand and predict the behavior of a program, which is one of the key motivations for the development of functional programming.
+Functional programming is a paradigm which can be difficult to defined, is it because the language uses [First class function](https://en.wikipedia.org/wiki/First-class_function) like the name suggests? From [Wikipedia's definition](https://en.wikipedia.org/wiki/Functional_programming), I like to focus on the pure functions, mostly because it is the reason I like functional programming:
 
-[[Source]](https://en.wikipedia.org/wiki/Functional_programming)
+> In functional code, the output value of a function depends only on the arguments that are input to the function, so calling a function f twice with the same value for an argument x will produce the same result f(x) each time. Eliminating side effects, i.e. changes in state that do not depend on the function inputs, can make it much easier to understand and predict the behavior of a program, which is one of the key motivations for the development of functional programming.
 
-The passage that strikes me is about removing the side effect, enabling easier testing, readability:
-
-> In functional code, the output value of a function depends only on the arguments that are input to the function, so calling a function f twice with the same value for an argument x will produce the same result f(x) each time
-
-But in [Scala], it is possible to use mutable variable like [`ListBuffer`](http://www.scala-lang.org/api/2.12.0/scala/collection/mutable/ListBuffer.html) or even a mutable reference like `var`. How to keep [Scala] a functional language with that feature ?
+Yet in [Scala], it is possible to use mutable variables like [`ListBuffer`](http://www.scala-lang.org/api/2.12.0/scala/collection/mutable/ListBuffer.html) or even a mutable reference like `var`. How is it possible to write pure functions with mutable structures?
 
 <!--more-->
 
-My first impression was: "I should not use it", but I came across the `List#takeWhile` function which uses those patterns:
+My first impression was: "I should not use it", but I came across the [`List#takeWhile`](https://github.com/scala/scala/blob/419a6394045a0615cb996152b04c92d25f9fb700/src/library/scala/collection/immutable/List.scala#L356-L364) function which uses those patterns:
 
 ```scala
 class List[+A] {
@@ -46,12 +40,12 @@ class List[+A] {
   }
 }
 ```
-[[Source]](https://github.com/scala/scala/blob/419a6394045a0615cb996152b04c92d25f9fb700/src/library/scala/collection/immutable/List.scala#L356-L364)
 
 
-The `dropWhile` method is nicely crafted from a functional point of view: every variables are immutable, it uses recursion but since the function is tail recursive the compiler is smart enough to convert it to a imperative one. Therefore the `StackOverflowError` can be avoided when working with big lists (> 1024 items).
+The `dropWhile` method is nicely crafted from a functional point of view: every variable is immutable, there are no side effects.
+The recursive call could be a problem: I might fill the stack and receive a [`StackOverflowError`](https://docs.oracle.com/javase/8/docs/api/java/lang/StackOverflowError.html), but the compiler is "smart enough" to optimize the [Tail recursion](https://en.wikipedia.org/wiki/Tail_call) into a classic iteration.
 
-The `takeWhile` method "doesn't seem really functional" because it is using state but the important part is: the state is kept locally, the function is still pure, there cannot be side effect. A "more functional" implementation could looks like that:
+The `takeWhile` method "doesn't seem really functional" because it is using state but the important part is: the state is kept locally, the function is still pure, without side effect. A "more functional" implementation could look like that:
 
 ```scala
 def takeWhile(f: A => Boolean): List[A]= {
@@ -66,23 +60,45 @@ def takeWhile(f: A => Boolean): List[A]= {
 }
 ```
 
-The implementation of these two "similar" functions are very different because `List` is design as a linked list. Given its implementation keep the first item or the last item are two different thing. For the `takeWhile` and it is necessary to re-create the list, in this example when calling the `reverse` method. Therefore the [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) and the [memory footprint](https://en.wikipedia.org/wiki/Memory_footprint) for both functions is very different. For a given list of n element, p element must be removed:
+The implementation of these two "similar" functions are very different because `List` is designed as a linked list. Given its implementation keep the first item or the last item are two different things. For the `takeWhile` and it is necessary to re-create the list, in this example when calling the `reverse` method.
+
+There are two metrics to take into account:
+
+* [the memory footprint](https://en.wikipedia.org/wiki/Memory_footprint): it is the memory used by the particular function
+* [the cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity): it is a quantitative measure of the number of linearly independent paths through a function's source code.
+
+For a given list of n element, p element must be removed:
 
 |                                    | memory footprint | cyclomatic complexity |
 |------------------------------------|------------------|-----------------------|
 | dropWhile                          | n                | p                     |
-| takeWhile (using recursion)        | 2n + p           | p + n                 |
-| takeWhile (using some local state) | n + p            | p                     |
+| takeWhile (using recursion)        | 2n + p           | 2p                    |
+| takeWhile (using local state)      | n + p            | p                     |
 
-For a very used method like `dropWhile` it is important to optimized it. The question is should I do it in my code ? There is no clear answer to that but I try to follow this methodology
+In this case, the memory footprint is less relevant since only the references are copied but the execution time deserves to be measured.
+I created a small [benchmark](https://gist.github.com/ThibautGery/4783181e00360832c27bcca46c274980) to compare the execution time of the software. I used a list of 100000 integers as input and tried to get the first 1, 50000 and 100000 elements. The simulation was run 10000 times, here are the results:
+
+
+| elements taken                                     | 1      | 50 000   | 100 000   |
+|----------------------------------------------------|--------|----------|-----------|
+| takeWhile using recursion (in milliseconds)        | 11     | 5436     | 13694     |
+| takeWhile using local state (in milliseconds)      | 11     | 4182     | 8699      |
+
+As expected, the version used in faster.
+
+For core method like `dropWhile` optimization is important. The question is should I do it in my code? There is no clear answer to that but I try to follow this methodology by [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)
 
 > [premature optimization is the root of all evil](http://wiki.c2.com/?PrematureOptimization)
 
-As said by [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth), measure the execution time (and memory in our case) your software and optimized when slow.
+I premature optimize my code only if those conditions are fulfilled unless I will first measure and act if the product is slow:
+
+* the optimization is straightforward: don't spend too much time on a function that might not even be critical
+* the refactoring doesn't hurt the readability: if the code is fast but cannot be maintained, your product is dead
+* the performance gain is significant: like reducing `n²` to `n log(n)`
 
 ### A few bad example using mutable state
 
-The mutable state in scala is really powerful
+The mutable state in Scala is really powerful
 
 > with great power comes great responsibility
 
@@ -102,7 +118,7 @@ class Mutable {
 }
 ```
 
-Every input and output type should be immutable to avoid that kind of situation.
+Every input and output structures should be immutable to avoid that kind of situation.
 
 ```scala
 class Mutable {
