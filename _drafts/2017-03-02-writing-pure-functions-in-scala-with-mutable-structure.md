@@ -5,7 +5,7 @@ comments: true
 excerpt_separator: <!--more-->
 ---
 
-Functional programming is a paradigm which can be difficult to defined, is it because the language uses [First class function](https://en.wikipedia.org/wiki/First-class_function) like the name suggests? From [Wikipedia's definition](https://en.wikipedia.org/wiki/Functional_programming), I like to focus on the pure functions, mostly because it is the reason I like functional programming:
+Functional programming is a paradigm which can be difficult to define, is it because the language uses [First class function](https://en.wikipedia.org/wiki/First-class_function) like the name suggests? From [Wikipedia's definition](https://en.wikipedia.org/wiki/Functional_programming), I like to focus on the pure functions, mostly because it is the reason I like functional programming:
 
 > In functional code, the output value of a function depends only on the arguments that are input to the function, so calling a function f twice with the same value for an argument x will produce the same result f(x) each time. Eliminating side effects, i.e. changes in state that do not depend on the function inputs, can make it much easier to understand and predict the behavior of a program, which is one of the key motivations for the development of functional programming.
 
@@ -17,8 +17,8 @@ My first impression was: "I should not use it", but I came across the [`List#tak
 
 ```scala
 class List[+A] {
-  def head: A
-  def tail: List[A]
+  def head: A // Current element of the list
+  def tail: List[A] // rest of the list
 
   def takeWhile(p: A => Boolean): List[A] = {
     val b = new ListBuffer[A]
@@ -43,7 +43,7 @@ class List[+A] {
 
 
 The `dropWhile` method is nicely crafted from a functional point of view: every variable is immutable, there are no side effects.
-The recursive call could be a problem: I might fill the stack and receive a [`StackOverflowError`](https://docs.oracle.com/javase/8/docs/api/java/lang/StackOverflowError.html), but the compiler is "smart enough" to optimize the [Tail recursion](https://en.wikipedia.org/wiki/Tail_call) into a classic iteration.
+The recursive call could be a problem: It can fill the stack and send a [`StackOverflowError`](https://docs.oracle.com/javase/8/docs/api/java/lang/StackOverflowError.html), but the compiler is "smart enough" to optimize the [Tail recursion](https://en.wikipedia.org/wiki/Tail_call) into a classic iteration.
 
 The `takeWhile` method "doesn't seem really functional" because it is using state but the important part is: the state is kept locally, the function is still pure, without side effect. A "more functional" implementation could look like that:
 
@@ -51,7 +51,7 @@ The `takeWhile` method "doesn't seem really functional" because it is using stat
 def takeWhile(f: A => Boolean): List[A]= {
   @tailrec
   def go(list: List[A], acc: List[A]): List[A] = {
-    list match {
+    list match { // use pattern matching
       case x :: xs if f(x) => go(xs, x :: acc)
       case _ => acc
     }
@@ -84,13 +84,13 @@ I created a small [benchmark](https://gist.github.com/ThibautGery/4783181e003608
 | takeWhile using recursion (in milliseconds)        | 11     | 5436     | 13694     |
 | takeWhile using local state (in milliseconds)      | 11     | 4182     | 8699      |
 
-As expected, the version used in faster.
+As expected, the version used in the core library is faster than mine.
 
 For core method like `dropWhile` optimization is important. The question is should I do it in my code? There is no clear answer to that but I try to follow this methodology by [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth)
 
 > [premature optimization is the root of all evil](http://wiki.c2.com/?PrematureOptimization)
 
-I premature optimize my code only if those conditions are fulfilled unless I will first measure and act if the product is slow:
+I prematurely optimize my code only if those conditions are fulfilled unless I will first measure and act if the product is slow:
 
 * the optimization is straightforward: don't spend too much time on a function that might not even be critical
 * the refactoring doesn't hurt the readability: if the code is fast but cannot be maintained, your product is dead
