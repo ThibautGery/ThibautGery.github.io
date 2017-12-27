@@ -8,18 +8,20 @@ title: Talks
 {% for talk in talks %}
 
 <div class="talk">
-  {% if talk.meetup %}
-    <span class="meta"><a href="{{ talk.meetup }}" target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i></a></span>
-  {% endif %}
-  {% if talk.slides %}
-    <span class="meta"><a href="{{ talk.slides }}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></span>
-  {% endif %}
-  {% if talk.code %}
-    <span class="meta"><a href="{{ talk.code }}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></span>
-  {% endif %}
-  {% if talk.video %}
-    <span class="meta"><a href="{{ talk.video }}" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></span>
-  {% endif %}
+  <div class="meta">
+    {% if talk.slides %}
+      <a href="{{ talk.slides }}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if talk.code %}
+      <a href="{{ talk.code }}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if talk.video %}
+      <a href="{{ talk.video }}" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+    {% endif %}
+    {% if talk.meetup %}
+      <a href="{{ talk.meetup }}" target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i></a>
+    {% endif %}
+  </div>
   <h3 class="post-title flag-icon flag-icon-{{ talk.language }}">
     {{ talk.title }}
   </h3>
