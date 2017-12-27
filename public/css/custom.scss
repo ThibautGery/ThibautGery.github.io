@@ -1,0 +1,60 @@
+---
+# Homepage pages style
+---
+
+a.more {
+  &::after {
+    content: "\2192";
+    display: inline-block;
+    margin-left: 7px;
+  }
+  &:hover::after {
+    animation:arrow-bounce 1s cubic-bezier(.4,.04,.4,1)
+  }
+  @keyframes arrow-bounce {
+    60%{transform:translateX(8px)}
+    70%{transform:translateX(-3px)}
+    80%{transform:translateX(2px)}
+    90%{transform:translateX(-1px)}
+  }
+}
+
+
+
+.talk {
+  border-left: solid #ac4142 0.4em;
+  padding: 1em;
+  margin-bottom: 1em;
+  a > .fa {
+    color: black;
+  }
+  a > .fa:hover {
+    color: #ac4142;
+
+  }
+  .flag-icon:before {
+    background-size: 20px 15px;
+    background-position: center;
+    display: inline-block;
+    width: 20px;
+    height: 15px;
+    content:"";
+  }
+  .flag-icon-au:before {
+    background-image: url('/public/img/flags/au.svg');
+
+  }
+  .flag-icon-fr:before {
+    background-image: url('/public/img/flags/fr.svg');
+  }
+  .fa {
+    margin: 4px;
+  }
+  .date {
+    font-size: 15px;
+    color: #9a9a9a;
+  }
+  .meta {
+    float: right;
+  }
+}

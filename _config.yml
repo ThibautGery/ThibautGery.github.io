@@ -8,6 +8,11 @@ permalink:        pretty
 gems :
   - jekyll-paginate
 
+collections:
+  talks:
+    output: false
+
+
 # Setup
 title:            Thibaut Géry
 tagline:          "Sharing things I've learned the hard way"

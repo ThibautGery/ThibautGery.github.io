@@ -1,0 +1,29 @@
+---
+layout: page
+title: Talks
+---
+
+
+{% assign talks = site.talks | reverse %}
+{% for talk in talks %}
+
+<div class="talk">
+  {% if talk.meetup %}
+    <span class="meta"><a href="{{ talk.meetup }}" target="_blank"><i class="fa fa-meetup" aria-hidden="true"></i></a></span>
+  {% endif %}
+  {% if talk.slides %}
+    <span class="meta"><a href="{{ talk.slides }}" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></span>
+  {% endif %}
+  {% if talk.code %}
+    <span class="meta"><a href="{{ talk.code }}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a></span>
+  {% endif %}
+  {% if talk.video %}
+    <span class="meta"><a href="{{ talk.video }}" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></span>
+  {% endif %}
+  <h3 class="post-title flag-icon flag-icon-{{ talk.language }}">
+    {{ talk.title }}
+  </h3>
+  <p class="date">  {{ talk.date | date_to_string }}</p>
+  <p>  {{ talk.content }}</p>
+</div>
+{% endfor %}
