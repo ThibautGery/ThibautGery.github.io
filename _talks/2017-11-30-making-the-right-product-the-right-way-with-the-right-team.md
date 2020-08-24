@@ -1,7 +1,7 @@
 ---
 title: Making the right product, the right way with the right team
 language: au
-slides: http://www.thibautgery.com/feedback-prez/
+slides: https://thibautgery.github.io/feedback-prez/
 meetup: https://www.meetup.com/Software-Crafters-Sydney/events/245346409
 ---
 
